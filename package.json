@@ -1,0 +1,32 @@
+{
+  "name": "paylocity_automation_challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Katka8859/Paylocity_Automation_Challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Katka8859/Paylocity_Automation_Challenge/issues"
+  },
+  "homepage": "https://github.com/Katka8859/Paylocity_Automation_Challenge#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@faker-js/faker": "^10.1.0",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.3",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-playwright": "^2.4.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.51.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
+}
