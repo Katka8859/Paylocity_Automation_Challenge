@@ -9,8 +9,8 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      PAYLOCITY_USER: ${{ secrets.TestUser851 }}
-      PAYLOCITY_PASSWORD: ${{ secrets.7ZDf}^n[D1hM }}
+      PAYLOCITY_USER: ${{ secrets.PAYLOCITY_USER }}
+      PAYLOCITY_PASSWORD: ${{ secrets.PAYLOCITY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
