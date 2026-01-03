@@ -6,6 +6,7 @@ export class DashboardPage {
   readonly dashboardTitle: Locator;
   readonly logoutButton: Locator;
   readonly tableHeader: Locator;
+  readonly tableEmployeesRow: Locator;
   readonly tableHeaderID: Locator;
   readonly tableHeaderLastName: Locator;
   readonly tableHeaderFirstName: Locator;
@@ -34,8 +35,10 @@ export class DashboardPage {
   readonly addModalLastNameInput: Locator;
   readonly addModalDependentsInput: Locator;
   readonly modalAddButton: Locator;
-  //readonly modalCancelButton: Locator;
+  readonly modalCancelButton: Locator;
   readonly modalUpdateButton: Locator;
+  readonly deleteEmployeeModalHeader: Locator;
+  readonly modalDeleteButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -43,31 +46,34 @@ export class DashboardPage {
       "//a[text()='Paylocity Benefits Dashboard']"
     );
     this.logoutButton = page.locator("//li[@class='nav-item']");
+    this.tableEmployeesRow = page.locator(
+      "xpath=//table[@id='employeesTable']//tr"
+    );
     this.tableHeader = page.locator("//thead[@class='thead-dark']");
     this.tableHeaderID = page.locator("//thead[@class='thead-dark']/tr/th[1]");
     this.tableHeaderLastName = page.locator(
-      "(//thead[@class='thead-dark']/tr/th[2]"
+      "//thead[@class='thead-dark']/tr/th[2]"
     );
     this.tableHeaderFirstName = page.locator(
-      "(//thead[@class='thead-dark']/tr/th[3]"
+      "//thead[@class='thead-dark']/tr/th[3]"
     );
     this.tableHeaderDependents = page.locator(
-      "(//thead[@class='thead-dark']/tr/th[4]"
+      "//thead[@class='thead-dark']/tr/th[4]"
     );
     this.tableHeaderSalary = page.locator(
-      "(//thead[@class='thead-dark']/tr/th[5]"
+      "//thead[@class='thead-dark']/tr/th[5]"
     );
     this.tableHeaderGrossPay = page.locator(
-      "(//thead[@class='thead-dark']/tr/th[6]"
+      "//thead[@class='thead-dark']/tr/th[6]"
     );
     this.tableHeaderBenefitsCost = page.locator(
-      "(//thead[@class='thead-dark']/tr/th[7]"
+      "//thead[@class='thead-dark']/tr/th[7]"
     );
     this.tableHeaderNetPay = page.locator(
-      "(//thead[@class='thead-dark']/tr/th[8]"
+      "//thead[@class='thead-dark']/tr/th[8]"
     );
     this.tableHeaderActions = page.locator(
-      "(//thead[@class='thead-dark']/tr/th[9]"
+      "//thead[@class='thead-dark']/tr/th[9]"
     );
     this.employeeID = (row: number) =>
       page.locator(`//table[@id='employeesTable']/tbody/tr[${row}]/td[1]`);
@@ -99,15 +105,20 @@ export class DashboardPage {
     this.addModalLastNameInput = page.locator("//input[@id='lastName']");
     this.addModalDependentsInput = page.locator("//input[@id='dependants']");
     this.modalAddButton = page.locator("//button[@id='addEmployee']");
-    //this.modalCancelButton = page.locator("//label[@for='lastName']");
+    this.modalCancelButton = page.locator("//button[text()='Cancel']");
     this.modalUpdateButton = page.locator("//button[@id='updateEmployee']");
+
+    this.deleteEmployeeModalHeader = page.locator(
+      "//h5[text()='Delete Employee']"
+    );
+    this.modalDeleteButton = page.locator("//button[@id='deleteEmployee']");
   }
 
   async clickLogout(): Promise<LoginPage> {
     await this.logoutButton.click();
     return new LoginPage(this.page);
   }
-
+  /*
   async clickAllMenuButtons(): Promise<DashboardPage> {
     for (let i = 1; i <= 4; i++) {
       await this.page
@@ -115,16 +126,20 @@ export class DashboardPage {
         .click();
     }
     return this;
-  }
+  }*/
 
-  async clickAddEmployee(): Promise<DashboardPage> {
+  async clickAddEmployee(
+    name: string,
+    surname: string,
+    number: string
+  ): Promise<DashboardPage> {
     await this.addEmployeeButton.click();
     await this.addModalFirstNameInput.fill(name);
     await this.addModalLastNameInput.fill(surname);
     await this.addModalDependentsInput.fill(number);
-    await this.modalUpdateButton.click();
-    /*    await expect(this.profileDetailsForm).toBeEnabled();
-    await expect(this.createAccountButton).toBeVisible();*/
+    await this.modalAddButton.click();
+    await expect(this.tableEmployees).toHaveText(name);
+    await expect(this.tableEmployees).toHaveText(surname);
     return this;
   }
 }
