@@ -44,7 +44,6 @@ export class LoginPage {
       await this.fillPassword(password);
       await this.clickLogin();
     });
-
     return new DashboardPage(this.page);
   }
 }

@@ -6,6 +6,7 @@ export class DashboardPage {
   readonly dashboardTitle: Locator;
   readonly logoutButton: Locator;
   readonly tableHeader: Locator;
+  readonly tableEmployees: Locator;
   readonly tableEmployeesRow: Locator;
   readonly tableHeaderID: Locator;
   readonly tableHeaderLastName: Locator;
@@ -46,6 +47,7 @@ export class DashboardPage {
       "//a[text()='Paylocity Benefits Dashboard']"
     );
     this.logoutButton = page.locator("//li[@class='nav-item']");
+    this.tableEmployees = page.locator("//table[@id='employeesTable']");
     this.tableEmployeesRow = page.locator(
       "xpath=//table[@id='employeesTable']//tr"
     );
@@ -105,7 +107,9 @@ export class DashboardPage {
     this.addModalLastNameInput = page.locator("//input[@id='lastName']");
     this.addModalDependentsInput = page.locator("//input[@id='dependants']");
     this.modalAddButton = page.locator("//button[@id='addEmployee']");
-    this.modalCancelButton = page.locator("//button[text()='Cancel']");
+    this.modalCancelButton = page.locator(
+      "#employeeModal > div > div > div:nth-of-type(3) > button:nth-of-type(3)"
+    );
     this.modalUpdateButton = page.locator("//button[@id='updateEmployee']");
 
     this.deleteEmployeeModalHeader = page.locator(
@@ -114,32 +118,166 @@ export class DashboardPage {
     this.modalDeleteButton = page.locator("//button[@id='deleteEmployee']");
   }
 
+  async clickOnAddEmployeeButton(): Promise<DashboardPage> {
+    await this.addEmployeeButton.click();
+    return this;
+  }
+
+  async fillFirstNameInAddEmployeeModal(name: string): Promise<DashboardPage> {
+    await this.addModalFirstNameInput.fill(name);
+    return this;
+  }
+
+  async fillLastNameInAddEmployeeModal(
+    surname: string
+  ): Promise<DashboardPage> {
+    await this.addModalLastNameInput.fill(surname);
+    return this;
+  }
+
+  async fillDependentInAddEmployeeModal(
+    dependants: number
+  ): Promise<DashboardPage> {
+    await this.addModalDependentsInput.fill(String(dependants));
+    return this;
+  }
+  async clickOnAddButtonInAddEmployeeModal(): Promise<DashboardPage> {
+    await this.modalAddButton.click();
+    return this;
+  }
+
+  async clickOnCancelButtonInAddEmployeeModal(): Promise<DashboardPage> {
+    await this.modalCancelButton.click();
+    return this;
+  }
+
   async clickLogout(): Promise<LoginPage> {
     await this.logoutButton.click();
     return new LoginPage(this.page);
   }
-  /*
-  async clickAllMenuButtons(): Promise<DashboardPage> {
-    for (let i = 1; i <= 4; i++) {
-      await this.page
-        .locator(`(//aside[@class='dashboard-sidebar']//li)[${i}]`)
-        .click();
-    }
-    return this;
-  }*/
 
-  async clickAddEmployee(
+  async addEmployee(
     name: string,
     surname: string,
-    number: string
+    dependents: number
   ): Promise<DashboardPage> {
-    await this.addEmployeeButton.click();
-    await this.addModalFirstNameInput.fill(name);
-    await this.addModalLastNameInput.fill(surname);
-    await this.addModalDependentsInput.fill(number);
-    await this.modalAddButton.click();
-    await expect(this.tableEmployees).toHaveText(name);
-    await expect(this.tableEmployees).toHaveText(surname);
+    await this.clickOnAddEmployeeButton();
+    await this.fillFirstNameInAddEmployeeModal(name);
+    await this.fillLastNameInAddEmployeeModal(surname);
+    await this.fillDependentInAddEmployeeModal(dependents);
+    await this.clickOnAddButtonInAddEmployeeModal();
+    const newEmployeeRow = this.page.locator(
+      `//table[@id='employeesTable']//tr[td[contains(text(),'${name}')] and td[contains(text(),'${surname}')]]`
+    );
+    await expect(newEmployeeRow).toBeVisible();
+    return this;
+  }
+
+  async assertNewAddedEmployeeSalary(
+    name: string,
+    surname: string,
+    expectedSalary: string
+  ): Promise<DashboardPage> {
+    const row = this.page.locator(
+      `//table[@id='employeesTable']/tbody/tr[td[2][normalize-space()="${name}"] and td[3][normalize-space()="${surname}"]]`
+    );
+    await expect(row).toBeVisible();
+    const salaryCell = row.locator("xpath=./td[5]");
+    await expect(salaryCell).toHaveText(expectedSalary);
+    return this;
+  }
+
+  async assertNewAddedEmployeeGrossPay(
+    name: string,
+    surname: string,
+    expectedGrossPay: string
+  ): Promise<DashboardPage> {
+    const row = this.page.locator(
+      `//table[@id='employeesTable']/tbody/tr[td[2][normalize-space()="${name}"] and td[3][normalize-space()="${surname}"]]`
+    );
+    await expect(row).toBeVisible();
+    const grossPayCell = row.locator("xpath=./td[6]");
+    await expect(grossPayCell).toHaveText(expectedGrossPay);
+    return this;
+  }
+
+  async assertNewAddedEmployeeBenefitsCost(
+    name: string,
+    surname: string,
+    expectedBenefitsCost: string
+  ): Promise<DashboardPage> {
+    const row = this.page.locator(
+      `//table[@id='employeesTable']/tbody/tr[td[2][normalize-space()="${name}"] and td[3][normalize-space()="${surname}"]]`
+    );
+    await expect(row).toBeVisible();
+    const benefitsCostCell = row.locator("xpath=./td[7]");
+    await expect(benefitsCostCell).toHaveText(expectedBenefitsCost);
+    return this;
+  }
+
+  async assertNewAddedEmployeeNetPay(
+    name: string,
+    surname: string,
+    expectedNetPay: string
+  ): Promise<DashboardPage> {
+    const row = this.page.locator(
+      `//table[@id='employeesTable']/tbody/tr[td[2][normalize-space()="${name}"] and td[3][normalize-space()="${surname}"]]`
+    );
+    await expect(row).toBeVisible();
+    const netPayCell = row.locator("xpath=./td[8]");
+    await expect(netPayCell).toHaveText(expectedNetPay);
+    return this;
+  }
+
+  async editNewAddedEmployee(
+    name: string,
+    surname: string,
+    newName: string,
+    newSurname: string,
+    newDependents: number
+  ): Promise<DashboardPage> {
+    const employeeRow = this.page.locator(
+      `//table[@id='employeesTable']//tr[td[contains(text(),'${name}')] and td[contains(text(),'${surname}')]]`
+    );
+    await expect(employeeRow).toBeVisible();
+    const editIcon = employeeRow.locator("xpath=.//i[@class='fas fa-edit']");
+    await editIcon.click();
+    await this.addModalFirstNameInput.clear();
+    await this.addModalFirstNameInput.fill(newName);
+    await this.addModalLastNameInput.clear();
+    await this.addModalLastNameInput.fill(newSurname);
+    await this.addModalDependentsInput.clear();
+    await this.addModalDependentsInput.fill(String(newDependents));
+    await this.modalUpdateButton.click();
+    await this.addEmployeeModalHeader.waitFor({
+      state: "hidden",
+      timeout: 5000,
+    });
+    const updatedEmployeeRow = this.page.locator(
+      `//table[@id='employeesTable']//tr[td[contains(text(),'${newName}')] and td[contains(text(),'${newSurname}')]]`
+    );
+    await expect(updatedEmployeeRow).toBeVisible();
+    return this;
+  }
+
+  async deleteNewAddedEmployee(
+    name: string,
+    surname: string
+  ): Promise<DashboardPage> {
+    const newEmployeeRow = this.page.locator(
+      `//table[@id='employeesTable']//tr[td[contains(text(),'${name}')] and td[contains(text(),'${surname}')]]`
+    );
+    await expect(newEmployeeRow).toBeVisible();
+    const deleteEmployeeIcon = newEmployeeRow.locator(
+      "xpath=.//i[@class='fas fa-times']"
+    );
+    await deleteEmployeeIcon.click();
+    await this.deleteEmployeeModalHeader.waitFor({
+      state: "attached",
+      timeout: 5000,
+    });
+    await this.modalDeleteButton.click();
+    await expect(newEmployeeRow).not.toBeVisible();
     return this;
   }
 }
