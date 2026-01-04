@@ -1,0 +1,57 @@
+[
+  {
+    "decription": "Maximum possible value of dependents",
+    "username": "user1",
+    "firstName": "Martin",
+    "lastName": "Green",
+    "dependants": 32,
+    "salary": 52000,
+    "expectedGross": 2000.0,
+    "expectedBenefitsCost": 653.85,
+    "expectedNet": 1346.15
+  },
+  {
+    "decription": "Basic value of dependents",
+    "username": "user2",
+    "firstName": "Martina",
+    "lastName": "Orange",
+    "dependants": 4,
+    "salary": 52000,
+    "expectedGross": 2000.0,
+    "expectedBenefitsCost": 115.38,
+    "expectedNet": 1884.62
+  },
+  {
+    "decription": "Zero value of dependents",
+    "username": "user3",
+    "firstName": "Chris",
+    "lastName": "Happy",
+    "dependants": 0,
+    "salary": 52000,
+    "expectedGross": 2000.0,
+    "expectedBenefitsCost": 38.46,
+    "expectedNet": 1961.54
+  },
+  {
+    "decription": "Salary under the expected value",
+    "username": "user4",
+    "firstName": "John",
+    "lastName": "Sad",
+    "dependants": 10,
+    "salary": 20000,
+    "expectedGross": 2000.0,
+    "expectedBenefitsCost": 230.77,
+    "expectedNet": 1769.23
+  },
+  {
+    "decription": "Salary above the expected value",
+    "username": "user5",
+    "firstName": "Leta",
+    "lastName": "Employee",
+    "dependants": 2,
+    "salary": 66000,
+    "expectedGross": 2000.0,
+    "expectedBenefitsCost": 76.92,
+    "expectedNet": 1923.08
+  }
+]

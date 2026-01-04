@@ -91,6 +91,11 @@ export class UserApi {
     return responseBody.id;
   }
 
+  async getAllEmployeesDataFromResponse(response: APIResponse) {
+    const responseBody = await response.json();
+    return responseBody;
+  }
+
   async getEmployeeDataFromResponse(response: APIResponse) {
     const responseBody = await response.json();
     return {

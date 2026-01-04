@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { fakerCS_CZ as faker } from "@faker-js/faker";
 import { UserApi } from "../../src/api/user_api.ts";
 
+// testing the basic flow of the application through the API
 test("Create, update and delete new employee", async ({ request }) => {
   const usernameEmployee = faker.internet.username();
   const firstName = faker.person.firstName();
