@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { fakerCS_CZ as faker } from "@faker-js/faker";
-import { LoginPage } from "../../src/pages/login_page.ts";
-import { DashboardPage } from "../../src/pages/dashboard_page.ts";
+import { LoginPage } from "../../../src/pages/login_page.ts";
+import { DashboardPage } from "../../../src/pages/dashboard_page.ts";
 
 //testing the overall flow of the application and user actions
 test.describe("E2E test - Add employee, edit employee, delete employee - tests", () => {

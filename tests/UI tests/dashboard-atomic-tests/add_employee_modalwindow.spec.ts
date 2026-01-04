@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { DashboardPage } from "../../src/pages/dashboard_page.ts";
-import { LoginPage } from "../../src/pages/login_page.ts";
+import { DashboardPage } from "../../../src/pages/dashboard_page.ts";
+import { LoginPage } from "../../../src/pages/login_page.ts";
 
 //These tests verifies that all elements on the page are found as expected - using soft expect.
 test.describe("Atomic tests for user dashboard page", () => {
