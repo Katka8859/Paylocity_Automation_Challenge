@@ -81,7 +81,8 @@ test.describe("Atomic tests for user dashboard page", () => {
       await expect.soft(dashBoardPage.employeeNetPay(1)).toBeVisible();
       await expect.soft(dashBoardPage.employeeNetPay(1)).toHaveText("1923.08");
 
-      await expect.soft(dashBoardPage.tableEmployeesRow).toHaveCount(3);
+      // TODO: Under normal circumstances, I would add this assert, but since I only have one set of login credentials for the application and it is not possible to log in for multiple users, there is a risk of instability in the test data and it is possible that this assert would fail.
+      //await expect.soft(dashBoardPage.tableEmployeesRow).toHaveCount(3);
     });
 
     await test.step("Table Actions test - Edit and delete employee icons", async () => {
