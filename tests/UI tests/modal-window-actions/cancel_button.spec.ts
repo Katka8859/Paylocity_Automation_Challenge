@@ -21,9 +21,10 @@ test("Cancel button in Add Employee modal window closes the modal", async ({
   });
 
   await test.step("Open Add Employee modal and click Cancel", async () => {
-    await dashBoardPage.clickOnAddEmployeeButton();
-    await expect(dashBoardPage.addEmployeeModalHeader).toBeVisible();
-    await dashBoardPage.clickOnCancelButtonInAddEmployeeModal();
-    await expect(dashBoardPage.addEmployeeModalHeader).not.toBeVisible();
+    await dashBoardPage
+      .clickOnAddEmployeeButton()
+      .then((cancel) => cancel.waitForLoadingOfModalWindow())
+      .then((cancel) => cancel.clickOnCancelButtonInAddEmployeeModal())
+      .then((cancel) => cancel.waitForCloseModalWindow());
   });
 });

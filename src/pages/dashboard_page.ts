@@ -155,6 +155,15 @@ export class DashboardPage {
     await this.logoutButton.click();
     return new LoginPage(this.page);
   }
+  async waitForLoadingOfModalWindow(): Promise<DashboardPage> {
+    await expect(this.addEmployeeModalHeader).toBeVisible();
+    return this;
+  }
+
+  async waitForCloseModalWindow(): Promise<DashboardPage> {
+    await expect(this.addEmployeeModalHeader).not.toBeVisible();
+    return this;
+  }
 
   async addEmployee(
     name: string,

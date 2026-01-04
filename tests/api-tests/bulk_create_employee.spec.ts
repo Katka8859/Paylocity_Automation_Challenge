@@ -58,8 +58,7 @@ test.describe("Create employees with data from employee_data.json", () => {
           "Net pay matches expected value"
         ).toBeCloseTo(employeeData.expectedNet, 2);
 
-        console.log(`
-Employee calculations verified:
+        console.log(`Employee calculations verified:
   Gross: ${retrievedEmployeeData.gross} (expected: ${employeeData.expectedGross})
   Benefits Cost: ${retrievedEmployeeData.benefitsCost} (expected: ${employeeData.expectedBenefitsCost})
   Net: ${retrievedEmployeeData.net} (expected: ${employeeData.expectedNet})
