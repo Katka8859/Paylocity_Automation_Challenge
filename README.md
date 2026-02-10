@@ -167,7 +167,10 @@ The DashboardPage class is the main page object handling the employee table, mod
 async addEmployee(name: string, surname: string, dependents: number): Promise<DashboardPage>
 async clickOnAddEmployeeButton(): Promise<DashboardPage>
 async fillFirstNameInAddEmployeeModal(name: string): Promise<DashboardPage>
+async fillLastNameInAddEmployeeModal(name: string): Promise<DashboardPage>
+async fillDependentInAddEmployeeModal(name: string): Promise<DashboardPage>
 async clickOnAddButtonInAddEmployeeModal(): Promise<DashboardPage>
+async clickOnCancelButtonInAddEmployeeModal(): Promise<DashboardPage>
 ```
 
 **Assertion Methods:**
