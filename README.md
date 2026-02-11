@@ -386,16 +386,6 @@ npx playwright show-report
 npx playwright show-trace trace.zip
 ```
 
-**Reports Include:**
-
-- Test execution summary
-- Pass/fail status
-- Screenshots on failure
-- Execution time
-- Detailed error messages and stack traces
-
-```
-
 ## 👤 Author
 
 
